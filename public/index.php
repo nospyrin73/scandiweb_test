@@ -1,5 +1,3 @@
 <?php
 
-echo '<pre>';
-print_r($_SERVER);
-echo '</pre>';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
