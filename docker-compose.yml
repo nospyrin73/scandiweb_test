@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: web_scandiweb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    restart: unless-stopped
+  
+  nginx:
+    container_name: nginx_scandiweb
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./nginx:/etc/nginx/conf.d
+    restart: unless-stopped
