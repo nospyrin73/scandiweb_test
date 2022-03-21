@@ -1,6 +1,13 @@
+import Header from './components/Header';
+
 function AddProduct() {
     return (
-        <h1>AddProduct</h1>
+        <>
+            <Header label="Product Add">
+                <button className="button success">Save</button>
+                <button className="button secondary">Cancel</button>
+            </Header>
+        </>
     );
 }
 

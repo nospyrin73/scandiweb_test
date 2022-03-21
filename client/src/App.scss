@@ -1,0 +1,16 @@
+$background-primary: #222222;
+
+$font-family: 
+    Roboto, BlinkMacSystemFont, 'Segoe UI', 
+    Oxygen, Ubuntu, Cantarell, 
+    'Open Sans', 'Helvetica Neue', sans-serif;
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: $background-primary;    
+    font-family: $font-family;
+    height: 100%;
+}
