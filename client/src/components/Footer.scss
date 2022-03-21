@@ -1,0 +1,11 @@
+@use "sass:color";
+
+@import "../variables";
+
+.footer {
+    background-color: color.scale($background-secondary, $lightness: -10%);
+    color: $foreground-color;
+    margin-top: auto;
+    padding: .3rem 0;
+    text-align: center;
+}

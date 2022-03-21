@@ -1,20 +1,9 @@
 @use "sass:color";
-
-$background-secondary: #2e2e2e;
-
-$foreground-primary: #42A5F5;
-$foreground-secondary: #3F3F3F;
-$foreground-success: #1DD447;
-$foreground-danger: #DC3545;
-
-$border-primary: #388CD0;
-$border-secondary: #413e3e;
-$border-success: #2CC02E;
-$border-danger: #C21D1D;
+@import "../variables";
 
 .header {
     background-color: $background-secondary;
-    color: #d1d1d1;
+    color: $foreground-color;
     display: flex;
     padding: 1rem 2rem;
 
@@ -31,6 +20,10 @@ $border-danger: #C21D1D;
 @mixin darken($fg, $border, $val: -20%) {
     background-color: color.scale($fg, $lightness: $val);
     border-color: color.scale($border, $lightness: $val);
+}
+
+.label h1 {
+    font-size: 1.5rem;
 }
 
 .button {
@@ -50,39 +43,39 @@ $border-danger: #C21D1D;
     }
 
     &.primary {
-        background-color: $foreground-primary;
+        background-color: $color-primary;
         border-color: $border-primary;
 
         &:hover {
-            @include darken($foreground-primary, $border-primary);
+            @include darken($color-primary, $border-primary);
         }
     }
 
     &.secondary {
-        background-color: $foreground-secondary;
+        background-color: $color-secondary;
         border-color: $border-secondary;
         color: #B4B4B4;
 
         &:hover {
-            @include darken($foreground-secondary, $border-secondary, 5%);
+            @include darken($color-secondary, $border-secondary, 5%);
         }
     }
 
     &.success {
-        background-color: $foreground-success;
+        background-color: $color-success;
         border-color: $border-success;
 
         &:hover {
-            @include darken($foreground-success, $border-success);
+            @include darken($color-success, $border-success);
         }
     }
 
     &.danger {
-        background-color: $foreground-danger;
+        background-color: $color-danger;
         border-color: $border-danger;
 
         &:hover {
-            @include darken($foreground-danger, $foreground-danger);
+            @include darken($color-danger, $color-danger);
         }
     }
 }
