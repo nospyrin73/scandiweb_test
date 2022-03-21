@@ -1,0 +1,44 @@
+@import 'variables';
+
+#product_form {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    column-gap: 10rem;
+
+    section {
+        color: $foreground-color;
+
+        label {
+            display: flex;
+            margin-bottom: 1.3rem;
+
+            input, select {
+                background-color: #414141;
+                border: none;
+                border-radius: 4px;
+                color: $foreground-color;
+                flex-basis: 70%;
+                height: 2.5rem;
+                padding: 0 .8rem;
+            }
+
+            input:focus {
+                border: 3px solid #3281EA;
+                outline: none;
+            }
+
+            select {
+                text-align: center;
+            }
+
+            span {
+                flex-grow: 1;
+                margin: auto 0;
+            }
+        }
+    }
+
+    p {
+        text-align: center;
+    }
+}
