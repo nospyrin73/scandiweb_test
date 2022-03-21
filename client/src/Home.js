@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import ProductList from './components/ProductList';
 import Footer from './components/Footer';
 
 function Home() {
@@ -9,7 +10,7 @@ function Home() {
                 <button className="button danger">Mass Delete</button>
             </Header>
 
-            <article className="content"></article>
+            <article className="content"><ProductList /></article>
 
             <Footer />
         </main>

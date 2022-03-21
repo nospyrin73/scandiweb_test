@@ -1,0 +1,45 @@
+@import '../variables';
+
+.product-list {
+    display: grid;
+    gap: 2rem 3rem;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.product-card {
+    background-color: $background-tertiary;
+    border-radius: 5px;
+    color: #FFF;
+    // border: 1px solid #FF0044;
+    font-size: 1.2rem;
+    // height: 200px;
+    padding: 2.5rem 0;
+    position: relative;
+    text-align: center;
+}
+
+.checkbox-label {
+    left: 10%;
+    position: absolute;
+    top: 10%;
+
+    input[type=checkbox] {
+        display: none;
+    }
+
+    span {
+        border: 2px solid $color-primary;
+        border-radius: 3px;
+        cursor: pointer;
+        display: inline-block;
+        height: 18px;
+        width: 18px;
+    }
+
+    input[type=checkbox]:checked + span {
+        background: $color-primary; 
+        border-radius: 3px;
+        color: #FFF;
+        text-decoration: none;
+    }
+}
