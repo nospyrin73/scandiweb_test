@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-function ProductForm() {
-    const defaultValues = {
-        sku: '', name: '', price: '',
-        size: '',
-        height: '', width: '', length: '',
-        weight: ''
-    };
+const defaultValues = {
+    sku: '', name: '', price: '',
+    size: '',
+    height: '', width: '', length: '',
+    weight: ''
+};
 
+function ProductForm() {
     const [values, setValues] = useState(defaultValues);
     const [type, setType] = useState('default');
 
