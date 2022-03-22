@@ -23,5 +23,39 @@ html, body {
 
 .content {
     flex-grow: 1;
-    padding: 3rem 10rem;
+    padding: 3rem 10%;
+}
+
+
+@media (max-width: 800px) {
+    .content {
+        padding: 3rem 1rem !important;
+    }
+
+    .product-list {
+        // gap: 2rem 3rem;
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .product-list {
+        gap: 2rem 2rem;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #product_form {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 1400px) {
+    .content {
+        padding: 3rem 3rem;
+    }
+
+    #product_form {
+        grid-template-columns: 50% 1fr;
+        column-gap: 2rem;
+    }
 }

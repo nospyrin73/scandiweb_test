@@ -82,7 +82,7 @@ function ProductForm() {
                 <label>
                     <span>Type Switcher</span>
                     <select>
-                        <option disabled selected value> -- select an option -- </option>
+                        <option disabled defaultValue value> -- select an option -- </option>
                         <option id="DVD">DVD</option>
                         <option id="Furniture">Furniture</option>
                         <option id="Book">Book</option>
