@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import Header from './components/Header';
 import ProductForm from './components/ProductForm';
 import Footer from './components/Footer';
@@ -9,7 +11,7 @@ function AddProduct() {
         <main className="main">
             <Header label="Product Add">
                 <button className="button success">Save</button>
-                <button className="button secondary">Cancel</button>
+                <Link to="/" className="button secondary">Cancel</Link>
             </Header>
 
             <article className="content"><ProductForm /></article>
