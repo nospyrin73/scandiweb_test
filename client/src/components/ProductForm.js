@@ -1,7 +1,11 @@
 import { useState } from 'react';
 
 function ProductForm() {
-    const [type, setType] = useState('');
+    const [type, setType] = useState('default');
+
+    function switchType(event) {
+        setType(event.target.value);
+    }
 
     const types = {
         DVD: (
@@ -61,8 +65,8 @@ function ProductForm() {
 
                 <label>
                     <span>Type Switcher</span>
-                    <select>
-                        <option disabled defaultValue value> -- select an option -- </option>
+                    <select value={type} onChange={switchType}>
+                        <option id="default"> -- select an option -- </option>
                         <option id="DVD">DVD</option>
                         <option id="Furniture">Furniture</option>
                         <option id="Book">Book</option>
@@ -70,7 +74,7 @@ function ProductForm() {
                 </label>
             </section>
             <section>
-                {types['DVD']}
+                {types[type]}
             </section>
         </form>
     );
