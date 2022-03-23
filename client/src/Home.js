@@ -30,12 +30,21 @@ function Home() {
             setIsChecked(false);
         }
     }
-    
+
+    function massDelete() {
+        const filtered = products.filter(product => {
+            // if it shouldn't be deleted, add to new products array 'filtered'
+            return !toBeDeleted.includes(product.sku);
+        });
+
+        setProducts(filtered);
+    }
+
     return (
         <main className="main">
             <Header label="Product List">
                 <Link to="/add-product" className="button primary">Add</Link>
-                <button className="button danger">Mass Delete</button>
+                <button className="button danger" onClick={massDelete}>Mass Delete</button>
             </Header>
 
             <article className="content">
