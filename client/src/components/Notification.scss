@@ -1,0 +1,24 @@
+@use 'sass:color';
+@import '../variables';
+
+.notification {
+    align-self: center;
+    border-radius: 4px;
+    display: flex;
+    // font-weight: bold;
+    font-size: 1.1rem;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding: .75rem 2.25rem;
+    width: 80%;
+
+    .cross {
+        cursor: pointer;
+    }
+
+    &.danger {
+        background-color: #F8D7DA;
+        border: 2px solid #F5C6CB;
+        color: $color-danger;
+    }
+}

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Header from './components/Header';
 import ProductForm from './components/ProductForm';
 import Footer from './components/Footer';
+import Notification from './components/Notification';
 
 import './AddProduct.scss'
 
@@ -17,6 +18,7 @@ const defaultValues = {
 function AddProduct() {
     const [values, setValues] = useState(defaultValues);
     const [type, setType] = useState('default');
+    const [alert, setAlert] = useState(null);
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -29,11 +31,14 @@ function AddProduct() {
 
     function switchType(event) {
         setType(event.target.value);
-        setValues(defaultValues);
+        
+        const { sku, name, price, ...special } = values;
+        for (let key in special) special[key] = '';
+        setValues({ sku, name, price, ...special});
     }
 
      function save() {
-        validate();
+        if (!validate()) return;
 
         const { sku, name, price, ...special } = values;
 
@@ -77,8 +82,8 @@ function AddProduct() {
                 expectNonNaN.push(special.size);
                 break;
             case 'Furniture':
-                expectNonEmpty.push(special.height, special.weight, special.length);
-                expectNonNaN.push(special.height, special.weight, special.length);
+                expectNonEmpty.push(special.height, special.width, special.length);
+                expectNonNaN.push(special.height, special.width, special.length);
                 break;
             case 'Book':
                 expectNonEmpty.push(special.weight);
@@ -88,16 +93,32 @@ function AddProduct() {
         }
 
         if (expectNonEmpty.includes("")) {
-            console.log('expectNonEmpty found an empty: ');
-            console.log(expectNonEmpty); 
+            setAlert({
+                className: 'danger',
+                message: 'Please, submit required data!'
+            });
+
+            return false;
         }
 
         if (expectNonNaN.some( val => isNaN(val) )) {
-            console.log('expectNonNaN found a nan: ');
-            console.log(expectNonNaN);
+            setAlert({
+                className: 'danger',
+                message: 'Please, provide the data of indicated type!'
+            });
+
+            return false;
         }
 
+        setAlert(null);
+        
+        return true;
     }
+
+    const notf = (alert !== null) ? 
+        <Notification alert={alert} setAlert={setAlert}/>
+        : 
+        '';
 
     return (
         <main className="main">
@@ -105,6 +126,8 @@ function AddProduct() {
                 <button className="button success" onClick={save}>Save</button>
                 <Link to="/" className="button secondary">Cancel</Link>
             </Header>
+
+            {notf}
 
             <article className="content">
                 <ProductForm values={values} type={type} 
