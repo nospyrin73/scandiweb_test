@@ -31,13 +31,24 @@ function Home() {
         }
     }
 
-    function massDelete() {
+    async function massDelete() {
         const filtered = products.filter(product => {
             // if it shouldn't be deleted, add to new products array 'filtered'
             return !toBeDeleted.includes(product.sku);
         });
 
-        setProducts(filtered);
+        // setProducts(filtered);
+
+        await fetch('/products/delete', {
+            method: 'POST',
+            body: JSON.stringify({skus: toBeDeleted})
+        });
+
+        // reload();
+    }
+
+    function reload() {
+        window.location.reload();
     }
 
     return (
