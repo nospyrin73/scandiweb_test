@@ -32,12 +32,41 @@ function AddProduct() {
         setValues(defaultValues);
     }
 
-   
+     function save() {
+        const { sku, name, price, ...special } = values;
+
+        let formData = new FormData();
+        
+        formData.append('sku', sku);
+        formData.append('name', name);
+        formData.append('price', price);
+        formData.append('type', type);
+        
+        switch(type) {
+            case 'DVD':
+                formData.append('size', special.size);
+                break;
+            case 'Furniture':
+                formData.append('height', special.height);
+                formData.append('width', special.width);
+                formData.append('length', special.length);
+                break;
+            case 'Book':
+                formData.append('weight', special.weight);
+                break;
+            default:
+        }
+        
+        fetch('/products/create', {
+            method: 'POST',
+            body: formData
+        });
+    }
 
     return (
         <main className="main">
             <Header label="Product Add">
-                <button className="button success">Save</button>
+                <button className="button success" onClick={save}>Save</button>
                 <Link to="/" className="button secondary">Cancel</Link>
             </Header>
 
