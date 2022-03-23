@@ -1,29 +1,5 @@
-import { useState } from 'react';
 
-const defaultValues = {
-    sku: '', name: '', price: '',
-    size: '',
-    height: '', width: '', length: '',
-    weight: ''
-};
-
-function ProductForm() {
-    const [values, setValues] = useState(defaultValues);
-    const [type, setType] = useState('default');
-
-    function handleChange(event) {
-        const { name, value } = event.target;
-
-        setValues({
-            ...values,
-            [name]: value
-        });
-    }
-
-    function switchType(event) {
-        setType(event.target.value);
-    }
-
+function ProductForm({ values, type, handleChange, switchType }) {
     const types = {
         DVD: (
             <div>
