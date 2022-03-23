@@ -7,19 +7,29 @@ namespace App;
 class Router {
     private array $routes = [];
 
-    private function register(string $route, array $controller, string $method) {
-        array_push($this->routes, [
-            'route' => $route,
-            'controller' => $controller,
-            'method' => $method
-        ]);
+    public function get(string|array $paths, array $controller, bool $regex = false): void {
+        $paths = is_array($paths) ? $paths : [$paths];
+
+        foreach ($paths as $path) {
+            array_push($this->routes, [
+                'path' => $path,
+                'controller' => $controller,
+                'method' => 'GET',
+                'regex' => $regex
+            ]);
+        }
     }
 
-    public function get(string $route, array $controller): void {
-        $this->register($route, $controller, 'GET');
-    }
+    public function post(string $paths, array $controller, bool $regex = false): void {
+        $paths = is_array($paths) ? $paths : [$paths];
 
-    public function post(string $route, array $controller): void {
-        $this->register($route, $controller, 'POST');
+        foreach ($paths as $path) {
+            array_push($this->routes, [
+                'path' => $path,
+                'controller' => $controller,
+                'method' => 'GET',
+                'regex' => $regex
+            ]);
+        }
     }
 }
