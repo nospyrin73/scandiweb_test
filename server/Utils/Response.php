@@ -25,7 +25,7 @@ class Response {
 
     public function sendFile($path): void {
         if (file_exists($path))
-            echo include $path;
+            echo file_get_contents($path);
 
         $this->end();
     }
