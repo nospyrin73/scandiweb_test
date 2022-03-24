@@ -26,10 +26,15 @@ class Request {
 
         parse_str($query, $this->queries);
 
-        print_r($this->path);
-        print_r($this->queries);
-
         return $this;
+    }
+
+    public function getPath(): string {
+        return $this->path;
+    }
+
+    public function getQueries(): array {
+        return $this->queries;
     }
 
     public function populatePayload(): Request {
@@ -50,5 +55,9 @@ class Request {
         }
 
         return $this;
+    }
+
+    public function getPayload(): array {
+        return $this->payload;
     }
 }
