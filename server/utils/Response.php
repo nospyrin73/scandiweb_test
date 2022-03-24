@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace App;
+namespace App\Utils;
 
 class Response {
     public function type(string $contentType): self {
