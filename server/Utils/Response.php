@@ -12,8 +12,8 @@ class Response {
         return $this;
     }
 
-    public function status(int $code): self {
-        http_response_code($code);
+    public function status(int $code, string $message = ''): self {
+        header("HTTP/1.1 ${code} ${message}");
 
         return $this;
     }

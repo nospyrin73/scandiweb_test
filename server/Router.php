@@ -47,16 +47,34 @@ class Router {
             ->populatePayload();
         $res = new Response();
         
+        $path_found = false;
         foreach ($this->routes as $route) {
             if ($route['regex']) {
                 $isMatch = preg_match($route['path'], $req->getPath());
 
                 if ($isMatch) {
+                    $path_found = true;
+
+                    if ($route['method'] !== $req->getMethod()) continue;
+                    
                     call_user_func_array($route['controller'], [$req, $res]);
+
+                    return;
                 }
             } else if ($req->getPath() === $route['path']) {
+                $path_found = true;
+
+                if ($route['method'] !== $req->getMethod()) continue;
+
                 call_user_func_array($route['controller'], [$req, $res]);
+
+                return;
             }
+        }
+
+        // path found but method mismatched
+        if ($path_found) {
+            $res->status(403, 'Forbidden Method');
         }
     }
 }

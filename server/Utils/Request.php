@@ -60,4 +60,12 @@ class Request {
     public function getPayload(): array {
         return $this->payload;
     }
+
+    public function getMethod(): string {
+        return $this->requestMethod;
+    }
+
+    public function getUri(): string {
+        return $this->requestUri;
+    }
 }
