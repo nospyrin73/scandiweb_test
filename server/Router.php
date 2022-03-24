@@ -9,27 +9,19 @@ use \App\Utils\{Request, Response};
 class Router {
     private array $routes = [];
 
-    public function get(string|array $paths, array $controller, bool $regex = false): void {
+    public function add(
+        string|array $paths,
+        array $controller, 
+        string $method = 'GET',
+        bool $regex = false): void {
+
         $paths = is_array($paths) ? $paths : [$paths];
 
         foreach ($paths as $path) {
             array_push($this->routes, [
                 'path' => $path,
                 'controller' => $controller,
-                'method' => 'GET',
-                'regex' => $regex
-            ]);
-        }
-    }
-
-    public function post(string $paths, array $controller, bool $regex = false): void {
-        $paths = is_array($paths) ? $paths : [$paths];
-
-        foreach ($paths as $path) {
-            array_push($this->routes, [
-                'path' => $path,
-                'controller' => $controller,
-                'method' => 'GET',
+                'method' => $method,
                 'regex' => $regex
             ]);
         }
