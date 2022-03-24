@@ -19,12 +19,12 @@ class Request {
     }
 
     public function populateUrlSegments(): Request {
-        [
-            'path' => $this->path,
-            'query' =>  $query
-        ] = parse_url($this->requestUri);
+        if (parse_url($this->requestUri, PHP_URL_QUERY)) {
+            ['query' => $query] = parse_url($this->requestUri);
+            parse_str($query, $this->queries);
+        }
 
-        parse_str($query, $this->queries);
+        ['path' => $this->path] = parse_url($this->requestUri);
 
         return $this;
     }
