@@ -5,8 +5,9 @@ declare(strict_types = 1);
 namespace App\Utils;
 
 class Response {
-    public function type(string $contentType): self {
-        header("Content-Type: ${contentType}");
+    public function type(string $path): self {
+        if (file_exists($path))
+            header("Content-Type: {mime_content_type($path)}");
 
         return $this;
     }
