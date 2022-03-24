@@ -10,7 +10,7 @@ class Request {
         private string $requestMethod,
         private string $contentType
     ) {
-        $this->payload = null;
+        $this->payload = [];
     }
 
     public function populatePayload(): Request {
