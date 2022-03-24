@@ -39,8 +39,8 @@ function Home() {
 
         // setProducts(filtered);
 
-        await fetch('/products/delete', {
-            method: 'POST',
+        await fetch('/products', {
+            method: 'DELETE',
             body: JSON.stringify({skus: toBeDeleted})
         });
 

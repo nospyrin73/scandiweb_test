@@ -64,7 +64,7 @@ function AddProduct() {
             default:
         }
         
-        fetch('/products/create', {
+        fetch('/products', {
             method: 'POST',
             body: formData
         });

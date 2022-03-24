@@ -15,8 +15,8 @@ Router::add("/\.(.+)$/", [View::class, 'resource'], regex: true);
 
 // Router::add('/products', []);
 
-// Router::add('/products/create', [], $method: 'POST');
+// Router::add('/products', [], $method: 'POST');
 
-// Router::add('/products/delete', [], $method: 'POST');
+// Router::add('/products', [], $method: 'DELETE');
 
 Router::run();
