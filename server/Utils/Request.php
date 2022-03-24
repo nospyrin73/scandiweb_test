@@ -18,7 +18,7 @@ class Request {
         $this->queries = [];
     }
 
-    public function populateUrlSegments(): Request {
+    public function populateUrlSegments(): self {
         if (parse_url($this->requestUri, PHP_URL_QUERY)) {
             ['query' => $query] = parse_url($this->requestUri);
             parse_str($query, $this->queries);
@@ -37,7 +37,7 @@ class Request {
         return $this->queries;
     }
 
-    public function populatePayload(): Request {
+    public function populatePayload(): self {
         if ($this->requestMethod === 'GET') {
             $this->payload = $_GET;
         } else if ($this->requestMethod === 'POST') {
