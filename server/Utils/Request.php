@@ -5,12 +5,31 @@ namespace App\Utils;
 class Request {
     private array $payload;
 
+    private string $path;
+
+    private array $queries;
+
     public function __construct(
         private string $requestUri,
         private string $requestMethod,
         private string $contentType
     ) {
         $this->payload = [];
+        $this->queries = [];
+    }
+
+    public function populateUrlSegments(): Request {
+        [
+            'path' => $this->path,
+            'query' =>  $query
+        ] = parse_url($this->requestUri);
+
+        parse_str($query, $this->queries);
+
+        print_r($this->path);
+        print_r($this->queries);
+
+        return $this;
     }
 
     public function populatePayload(): Request {
