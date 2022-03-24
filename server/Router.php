@@ -7,9 +7,9 @@ namespace App;
 use \App\Utils\{Request, Response};
 
 class Router {
-    private array $routes = [];
+    private static array $routes = [];
 
-    public function add(
+    public static function add(
         string|array $paths,
         array $controller, 
         string $method = 'GET',
@@ -18,7 +18,7 @@ class Router {
         $paths = is_array($paths) ? $paths : [$paths];
 
         foreach ($paths as $path) {
-            array_push($this->routes, [
+            array_push(self::$routes, [
                 'path' => $path,
                 'controller' => $controller,
                 'method' => $method,
@@ -27,7 +27,7 @@ class Router {
         }
     }
 
-    public function run() {
+    public static function run() {
         [
             'REQUEST_URI' => $requestUri,
             'REQUEST_METHOD' => $httpMethod,
@@ -40,7 +40,7 @@ class Router {
         $res = new Response();
         
         $path_found = false;
-        foreach ($this->routes as $route) {
+        foreach (self::$routes as $route) {
             if ($route['regex']) {
                 $isMatch = preg_match($route['path'], $req->getPath());
 

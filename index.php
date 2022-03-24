@@ -9,16 +9,14 @@ use \App\View AS View;
 
 define('PUBLIC_DIR', __DIR__ . '/public');
 
-$server = new Router();
+Router::add(['/', '/add-product'], [View::class, 'index']);
 
-$server->add(['/', '/add-product'], [View::class, 'index']);
+Router::add("/\.(.+)$/", [View::class, 'resource'], regex: true);
 
-$server->add("/\.(.+)$/", [View::class, 'resource'], regex: true);
+// Router::add('/products', []);
 
-// $server->add('/products', []);
+// Router::add('/products/create', [], $method: 'POST');
 
-// $server->add('/products/create', [], $method: 'POST');
+// Router::add('/products/delete', [], $method: 'POST');
 
-// $server->post('/products/delete', [], $method: 'POST');
-
-$server->run();
+Router::run();
