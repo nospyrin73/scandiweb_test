@@ -72,7 +72,11 @@ class Query {
     public function execute(): self {
         $this->statement .= ';';
 
-        $this->result = $this->database->getConnection()->query($this->statement);
+        try {
+            $this->result = $this->database->getConnection()->query($this->statement);
+        } catch (\PDOException $e) {
+           throw new \PDOException($e->getMessage(), (int) $e->getCode());
+       }
 
         return $this;
     }

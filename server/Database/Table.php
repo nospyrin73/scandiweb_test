@@ -34,8 +34,12 @@ class Table {
     }
 
     public function create(): self {
-        $this->database->getConnection()->exec($this->statement);
-
+        try {
+            $this->database->getConnection()->exec($this->statement);
+        } catch (\PDOException $e) {
+           throw new \PDOException($e->getMessage(), (int) $e->getCode());
+        }
+        
         return $this;
     }
 
