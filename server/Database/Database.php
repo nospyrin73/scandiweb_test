@@ -10,24 +10,21 @@ class Database {
     private PDO $connection;
 
     public function __construct() {
-        $host = "mysql";
-        $port = "3306";
-        $dbname = "scandiweb";
-        $charset = "utf8mb4";
+        $charset = 'utf8mb4';
 
-        $user = "root";
-        $password = "scandiweb";
-        
-        $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=$charset";
+        $dsn = 'mysql:host=' . $_ENV['DB_HOST'] . ';port=' . $_ENV['DB_PORT'] . ';dbname=' . $_ENV['DB_NAME'] . ';charset=' . $charset;
+        // "mysql:host=$host;port=$port;dbname=$dbname;charset=$charset";
 
-       try {
-            $this->connection = new PDO($dsn, $user, $password, [
+
+    echo $_ENV['DB_USER'], $_ENV['DB_PASSWORD'];
+        try {
+            $this->connection = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], [
                 PDO::ATTR_EMULATE_PREPARES => false,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
-       } catch (\PDOException $e) {
-           throw new \PDOException($e->getMessage(), (int) $e->getCode());
-       }
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int) $e->getCode());
+        }
     }
 
     public function getConnection(): PDO {

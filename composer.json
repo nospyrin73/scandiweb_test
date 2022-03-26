@@ -6,7 +6,9 @@
             "email": "mohammedzuhair527@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "server/"
