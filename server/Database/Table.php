@@ -7,6 +7,15 @@ namespace App\Database;
 class Table {
     private string $statement;
 
+    /**
+     * @param array $fields = [
+     *      [
+     *          'name' => '',
+     *          'data_type' => '',
+     *          'constraints' => ['', '']
+     *      ]
+     * ]
+     */
     public function __construct(
         private Database $database,
         private string $name,
@@ -39,7 +48,7 @@ class Table {
         } catch (\PDOException $e) {
            throw new \PDOException($e->getMessage(), (int) $e->getCode());
         }
-        
+
         return $this;
     }
 
