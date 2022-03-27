@@ -28,10 +28,22 @@ class Query {
         return $this;
     }
 
-    public function insert(array $data): self {
+    public function insert(array $data, bool $multiple = false): self {
         $this->statement = 
-            'INSERT INTO ' . $this->table->getName() . ' (' . implode(', ', array_keys($data)) . ') ' .
-            'VALUES (' . implode(', ', array_values($data)) . ')';
+            'INSERT INTO ' . $this->table->getName() . ' (' . implode(', ', array_keys($data)) . ')';
+
+        if ($multiple) {
+            // get n of insertions
+            $count = count(reset($data));
+
+            for ($i = 0; $i < $count; $i++) {
+                $this->statement .= ' VALUES (' . implode(', ', array_column($data, $i)) . ') ';
+            }
+            
+        } else {
+            $this->statement .= ' VALUES (' . implode(', ', array_values($data)) . ') ';
+        }
+
         return $this;
     }
 
