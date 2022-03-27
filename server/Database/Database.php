@@ -13,10 +13,7 @@ class Database {
         $charset = 'utf8mb4';
 
         $dsn = 'mysql:host=' . $_ENV['DB_HOST'] . ';port=' . $_ENV['DB_PORT'] . ';dbname=' . $_ENV['DB_NAME'] . ';charset=' . $charset;
-        // "mysql:host=$host;port=$port;dbname=$dbname;charset=$charset";
 
-
-    echo $_ENV['DB_USER'], $_ENV['DB_PASSWORD'];
         try {
             $this->connection = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], [
                 PDO::ATTR_EMULATE_PREPARES => false,
