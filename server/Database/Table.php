@@ -7,44 +7,61 @@ namespace App\Database;
 class Table {
     private string $statement;
 
-    /**
-     * @param array $fields = [
-     *      [
-     *          'name' => '',
-     *          'data_type' => '',
-     *          'constraints' => ['' [, ...] ],
-     *      ]
-     * ]
-     * @param array|null $index = ['index_name' => '', 'columns' => ['' [, ...] ] ]
-     */
+    private array $fields;
+
+    private array $foreignKeys;
+
+    private string $index;
+
     public function __construct(
         private Database $database,
         private string $name,
-        private array $fields,
-        private array|null $index = null
     ) {
+        $this->fields = [];
+        $this->foreignKeys = [];
+        $this->index = '';
+    }
+
+    public function addField(string $name, string $dataType, array $constraints): self {
+        $this->fields[] = 
+            $name . ' ' . $dataType . ' ' . implode(' ', $constraints);
+
+        return $this;
+    }
+
+    public function addForeignKey(
+        string $name,
+        array $columns,
+        string $reference,
+        array $referenceColumns,
+        string $onDelete = '',
+        string $onUpdate = ''
+    ): self {
+        $this->foreignKeys[] = 
+            'FOREIGN KEY ' . $name
+                . ' (' . implode(', ', $columns) . ') '
+            . 'REFERENCES ' . $reference . ' ('
+                . implode(', ', $referenceColumns) . ') '
+            . ( ($onDelete !== '') ? 'ON DELETE ' . $onDelete : '' )
+            . ( ($onUpdate !== '') ? 'ON UPDATE ' . $onUpdate : '' );
+            
+        return $this;
+    }
+
+    public function addIndex(string $name, array $columns): self {
+        $this->index =
+            'INDEX ' . $name . ' (' . implode(', ', $columns) . ')';
+
+        return $this;
     }
 
     public function build(): self {
-        $this->statement = 'CREATE TABLE IF NOT EXISTS ' . $this->name . ' (';
-
-        $i = 0;
-        $size = count($this->fields);
-
-        foreach ($this->fields as $field) {
-            $this->statement .= 
-                $field['name'] . ' ' . $field['data_type'] . ' ' . implode(' ', $field['constraints']);
-            
-            if (++$i !== $size)
-                $this->statement .= ', ';
-        }
-
-        if ($this->index !== null) {
-            $this->statement .=
-                ', INDEX ' . $this->index['index_name'] . ' (' . implode(', ', $this->index['columns']) . ')';
-        }
-
-        $this->statement .= ');';
+        $this->statement = 
+            'CREATE TABLE IF NOT EXISTS ' . $this->name . ' ('
+            . implode(', ', $this->fields)
+            . ( !( empty($this->foreignKeys) ) ? ', ' . implode(', ', $this->foreignKeys) : '' )
+            . ( ($this->index !== '') ? ', ' . $this->index : '' )
+            . ');';
 
         return $this;
     }
