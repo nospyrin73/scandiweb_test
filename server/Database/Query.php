@@ -30,18 +30,25 @@ class Query {
 
     public function insert(array $data, bool $multiple = false): self {
         $this->statement = 
-            'INSERT INTO ' . $this->table->getName() . ' (' . implode(', ', array_keys($data)) . ')';
+            'INSERT INTO ' . $this->table->getName() . ' (' . implode(', ', array_keys($data)) . ') ';
 
         if ($multiple) {
             // get n of insertions
             $count = count(reset($data));
 
+            $this-> statement .= 'VALUES ';
+            
             for ($i = 0; $i < $count; $i++) {
-                $this->statement .= ' VALUES (' . implode(', ', array_column($data, $i)) . ') ';
+                $this->statement .= '(' . implode(', ', array_column($data, $i)) . ')';
+
+                // if not last
+                if ($i + 1 !== $count) {
+                    $this->statement .= ', ';
+                }
             }
             
         } else {
-            $this->statement .= ' VALUES (' . implode(', ', array_values($data)) . ') ';
+            $this->statement .= 'VALUES (' . implode(', ', array_values($data)) . ')';
         }
 
         return $this;
