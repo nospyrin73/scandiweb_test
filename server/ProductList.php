@@ -29,36 +29,45 @@ class ProductList {
         foreach ($result as $row) {
             switch ($row['type']) {
                 case 'DVD':
-                    $products[] = new DVD(
-                        $row['sku'],
-                        $row['name'],
-                        $row['price'],
-                        $row['type'],
-                        $row['size']
-                    );
+                    $dvd = new DVD($row['sku']);
+
+                    $dvd->setName($row['name']);
+                    $dvd->setPrice($row['price']);
+                    $dvd->setType($row['type']);
+                    $dvd->setSize($row['size']);
+
+                    $products[] = $dvd;
                     break;
                 case 'Furniture':
-                    $products[] = new Furniture(
-                        $row['sku'],
-                        $row['name'],
-                        $row['price'],
-                        $row['type'],
-                        $row['height'],
-                        $row['width'],
-                        $row['length']
-                    );
+                    $furn = new Furniture($row['sku']);
+
+                    $furn->setName($row['name']);
+                    $furn->setPrice($row['price']);
+                    $furn->setType($row['type']);
+                    $furn->setHeight($row['height']);
+                    $furn->setWidth($row['width']);
+                    $furn->setLength($row['length']);
+                    
+                    $products[] = $furn;
                     break;
                 case 'Book':
-                    $products[] = new Book(
-                        $row['sku'],
-                        $row['name'],
-                        $row['price'],
-                        $row['type'],
-                        $row['weight']
-                    );
+                    $book = new Book($row['sku']);
+
+                    $book->setName($row['name']);
+                    $book->setPrice($row['price']);
+                    $book->setType($row['type']);
+                    $book->setWeight($row['weight']);
+
+                    $products[] = $book;
+                    break;
             }
         }
 
-        $res->json(array_map(fn($p) => $p->toMap(), $products));
+        $res->json(
+            array_map(
+                fn($p) => $p->toMap(),
+                $products
+            )
+        );
     }
 }

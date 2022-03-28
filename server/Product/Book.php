@@ -7,14 +7,20 @@ namespace App\Product;
 use App\Database\Query;
 
 class Book extends Product {
+    private float $weight;
+
     public function __construct(
         string $sku,
-        string $name,
-        float $price,
-        string $type,
-        private float $weight
     ) {
-        parent::__construct($sku, $name, $price, $type);
+        parent::__construct($sku);
+    }
+
+    public function getWeight(): float {
+        return $this->weight;
+    }
+
+    public function setWeight(float $weight) {
+        $this->weight = $weight;
     }
 
     public function insert() {

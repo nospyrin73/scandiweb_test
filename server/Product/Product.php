@@ -7,12 +7,27 @@ namespace App\Product;
 use App\Database\Query;
 
 abstract class Product {
+    protected string $name;
+
+    protected float $price;
+
+    protected string $type;
+
     public function __construct(
         protected string $sku,
-        protected string $name,
-        protected float $price,
-        protected string $type
     ) {
+    }
+
+    public function setName(string $name): void {
+        $this->name = $name;
+    }
+
+    public function setPrice(float $price): void {
+        $this->price = $price;
+    }
+
+    public function setType(string $type) {
+        $this->type = $type;
     }
 
     abstract public function insert();

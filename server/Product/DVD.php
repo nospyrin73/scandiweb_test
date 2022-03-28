@@ -5,14 +5,20 @@ declare(strict_types = 1);
 namespace App\Product;
 
 class DVD extends Product {
+    private float $size;
+
     public function __construct(
-        string $sku,
-        string $name,
-        float $price,
-        string $type,
-        private float $size
+        string $sku
     ) {
-        parent::__construct($sku, $name, $price, $type);
+        parent::__construct($sku);
+    }
+
+    public function getSize(): float {
+        return $this->size;
+    }
+
+    public function setSize(float $size) {
+        $this->size = $size;
     }
 
     public function insert() {}
