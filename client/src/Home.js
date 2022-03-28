@@ -1,19 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Header from './components/Header';
 import ProductList from './components/ProductList';
 import Footer from './components/Footer';
 
+async function fetchProducts() {
+    let result = await fetch('/products');
+
+    let json = await result.json();
+
+    return json;
+}
+
 function Home() {
-    const [products, setProducts] = useState([
-        {sku: 1, name: 'foo', price: '23$'},
-        {sku: 2, name: 'bar', price: '25$'},
-        {sku: 3, name: 'baz', price: '32$'},
-        {sku: 4, name: 'mal', price: '94$'},
-        {sku: 5, name: 'par', price: '72$'},
-    ]);
+    const [products, setProducts] = useState([]);
     const [toBeDeleted, setToBeDeleted] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            setProducts(await fetchProducts());
+        })();
+    }, []);
 
     function setShouldDelete(sku, setIsChecked) {
         let i = toBeDeleted.indexOf(sku);
