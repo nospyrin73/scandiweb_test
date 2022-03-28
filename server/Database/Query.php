@@ -37,7 +37,7 @@ class Query {
             $count = count(reset($data));
 
             $this-> statement .= 'VALUES ';
-            
+
             for ($i = 0; $i < $count; $i++) {
                 $this->statement .= '(' . implode(', ', array_column($data, $i)) . ')';
 
@@ -84,6 +84,28 @@ class Query {
         return $this;
     }
 
+    public function join(string $type, string $table, string $column): self {
+        $this->statement .= " ${type} JOIN " . $table . ' USING (' . $column . ')';
+
+        return $this; 
+    }
+
+    public function first(): array {
+        try {
+            return $this->result->fetch();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public function all(): array {
+        try {
+            return $this->result->fetchAll();
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public function getStatement(): string {
         return $this->statement;
     }
@@ -94,7 +116,7 @@ class Query {
         try {
             $this->result = $this->database->getConnection()->query($this->statement);
         } catch (\PDOException $e) {
-           throw new \PDOException($e->getMessage(), (int) $e->getCode());
+            throw new \PDOException($e->getMessage(), (int) $e->getCode());
        }
 
         return $this;
