@@ -34,15 +34,18 @@ function Home() {
     async function massDelete() {
         const filtered = products.filter(product => {
             // if it shouldn't be deleted, add to new products array 'filtered'
-            return !toBeDeleted.includes(product.sku);
+            return toBeDeleted.includes(product.sku);
         });
 
-        // setProducts(filtered);
-
-        await fetch('/products', {
+        let result = await fetch('/products', {
             method: 'DELETE',
-            body: JSON.stringify({skus: toBeDeleted})
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({skus: filtered})
         });
+
+        console.log(await result.text());
 
         // reload();
     }
