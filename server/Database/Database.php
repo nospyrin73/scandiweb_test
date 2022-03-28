@@ -9,6 +9,8 @@ use PDO;
 class Database {
     private PDO $connection;
 
+    public array $tables;
+
     public function __construct() {
         $charset = 'utf8mb4';
 
@@ -26,5 +28,11 @@ class Database {
 
     public function getConnection(): PDO {
         return $this->connection;
+    }
+
+    public function addTable(Table $table): self {
+        $this->tables[$table->getName()] = $table;
+
+        return $this;
     }
 }

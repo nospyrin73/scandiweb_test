@@ -73,6 +73,8 @@ class Table {
            throw new \PDOException($e->getMessage(), (int) $e->getCode());
         }
 
+        $this->database->addTable($this);
+
         return $this;
     }
 
