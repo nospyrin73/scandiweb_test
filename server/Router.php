@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace App;
 
 use \App\Utils\{Request, Response};
+use \App\Database\Database;
 
 class Router {
     private static array $routes = [];
@@ -27,7 +28,7 @@ class Router {
         }
     }
 
-    public static function run() {
+    public static function run(Database $db) {
         [
             'REQUEST_URI' => $requestUri,
             'REQUEST_METHOD' => $httpMethod,
@@ -49,7 +50,7 @@ class Router {
 
                     if ($route['method'] !== $req->getMethod()) continue;
                     
-                    call_user_func_array($route['controller'], [$req, $res]);
+                    call_user_func_array($route['controller'], [$req, $res, $db]);
 
                     return;
                 }
@@ -58,7 +59,7 @@ class Router {
 
                 if ($route['method'] !== $req->getMethod()) continue;
 
-                call_user_func_array($route['controller'], [$req, $res]);
+                call_user_func_array($route['controller'], [$req, $res, $db]);
 
                 return;
             }
