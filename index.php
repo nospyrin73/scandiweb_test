@@ -15,6 +15,8 @@ $dotenv->load();
 
 Router::add(['/', '/add-product'], [View::class, 'index']);
 
+Router::add('/populate', [ProductList::class, 'populate']);
+
 Router::add("/\.(.+)$/", [View::class, 'resource'], regex: true);
 
 Router::add('/products', [ProductList::class, 'list']);
