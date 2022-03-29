@@ -66,11 +66,11 @@ function ProductForm({ values, type, handleChange, switchType }) {
 
                 <label>
                     <span>Type Switcher</span>
-                    <select value={type} onChange={switchType}>
-                        <option id="default"> -- select an option -- </option>
-                        <option id="DVD">DVD</option>
-                        <option id="Furniture">Furniture</option>
-                        <option id="Book">Book</option>
+                    <select onChange={switchType} defaultValue="default">
+                        <option value="default" disabled> -- select an option -- </option>
+                        <option>DVD</option>
+                        <option>Furniture</option>
+                        <option>Book</option>
                     </select>
                 </label>
             </section>

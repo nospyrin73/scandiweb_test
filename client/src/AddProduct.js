@@ -71,6 +71,15 @@ function AddProduct() {
     }
 
     function validate() {
+        if (type === 'default') {
+            setAlert({
+                className: 'danger',
+                message: 'Please, select a type to proceed!'
+            });
+
+            return false;
+        }
+
         const { sku, name, price, ...special } = values;
         
         const expectNonEmpty = [sku, name, price];
