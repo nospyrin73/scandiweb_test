@@ -45,21 +45,21 @@ function Home() {
             return toBeDeleted.includes(product.sku);
         });
 
-        let result = await fetch('/products', {
+        const result = await fetch('/products', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({skus: filtered})
+            body: JSON.stringify({filtered})
         });
 
-        console.log(await result.text());
+        const deleted = await result.json();
 
-        // reload();
-    }
+        const updatedProducts = products.filter(product => {
+            return !deleted.includes(product.sku);
+        });
 
-    function reload() {
-        window.location.reload();
+        setProducts(updatedProducts);
     }
 
     return (

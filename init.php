@@ -81,7 +81,7 @@ $book
 
 // ---------
 
-try {
+/* try {
 
 
     (new Query($database, $product))
@@ -157,7 +157,7 @@ try {
     ->execute();
 } catch (PDOException $e) {
     // error_log($e->getMessage() . ' - ' . $e->getFile() . ': ' . $e->getLine());
-}
+} */
 
 return [
     $database, 

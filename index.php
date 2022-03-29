@@ -19,9 +19,9 @@ Router::add("/\.(.+)$/", [View::class, 'resource'], regex: true);
 
 Router::add('/products', [ProductList::class, 'list']);
 
-// Router::add('/products', [], $method: 'POST');
+// Router::add('/products', [], method: 'POST');
 
-// Router::add('/products', [], $method: 'DELETE');
+Router::add('/products', [ProductList::class, 'massDelete'], method: 'DELETE');
 
 [$database, $tables] = require 'init.php';
 

@@ -41,8 +41,6 @@ function Product({ sku, name, price, type, special, shouldDelete }) {
         default:
     }
 
-    console.log(specialText);
-
     return (
         <div className={classNames('product-card', 'shadow', {'marked': isChecked})} 
         onClick={event => shouldDelete(sku, setIsChecked)}>

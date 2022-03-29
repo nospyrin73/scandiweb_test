@@ -47,7 +47,7 @@ class Request {
                 if (preg_match("#application/json#", $this->contentType)) {
                     $json = file_get_contents('php://input');
 
-                    $this->payload = json_decode($json);
+                    $this->payload = json_decode($json, associative: true);
                 } else if (
                     preg_match("#application/x-www-form-urlencoded#", $this->contentType)
                     ||

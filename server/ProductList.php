@@ -70,4 +70,41 @@ class ProductList {
             )
         );
     }
+
+    public static function massDelete($req, $res, $db) {
+        $products = $req->getPayload()['filtered'];
+
+        $deleted = [];
+
+        foreach ($products as $p) {
+            switch ($p['type']) {
+                case 'DVD':
+                    $dvd = new DVD($p['sku']);
+                    
+                    if ($dvd->delete($db)) {
+                        $deleted[] = $dvd->getSku();
+                    }
+
+                    break;
+                case 'Furniture':
+                    $furn = new Furniture($p['sku']);
+                    
+                    if ($furn->delete($db)) {
+                        $deleted[] = $furn->getSku();
+                    }
+
+                    break;
+                case 'Book':
+                    $book = new Book($p['sku']);
+
+                    if ($book->delete($db)) {
+                        $deleted[] = $book->getSku();
+                    }
+
+                    break;
+            }
+        }
+
+        $res->json($deleted);
+    }
 }
