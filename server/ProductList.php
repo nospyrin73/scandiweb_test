@@ -27,40 +27,36 @@ class ProductList {
         $products = [];
 
         foreach ($result as $row) {
+            $product = null;
+
             switch ($row['type']) {
                 case 'DVD':
-                    $dvd = new DVD($row['sku']);
+                    $product = new DVD($row['sku']);
 
-                    $dvd->setName($row['name']);
-                    $dvd->setPrice($row['price']);
-                    $dvd->setType($row['type']);
-                    $dvd->setSize($row['size']);
+                    $product->setSize($row['size']);
 
-                    $products[] = $dvd;
                     break;
                 case 'Furniture':
-                    $furn = new Furniture($row['sku']);
+                    $product = new Furniture($row['sku']);
 
-                    $furn->setName($row['name']);
-                    $furn->setPrice($row['price']);
-                    $furn->setType($row['type']);
-                    $furn->setHeight($row['height']);
-                    $furn->setWidth($row['width']);
-                    $furn->setLength($row['length']);
+                    $product->setHeight($row['height']);
+                    $product->setWidth($row['width']);
+                    $product->setLength($row['length']);
                     
-                    $products[] = $furn;
                     break;
                 case 'Book':
-                    $book = new Book($row['sku']);
+                    $product = new Book($row['sku']);
 
-                    $book->setName($row['name']);
-                    $book->setPrice($row['price']);
-                    $book->setType($row['type']);
-                    $book->setWeight($row['weight']);
+                    $product->setWeight($row['weight']);
 
-                    $products[] = $book;
                     break;
             }
+
+            $product->setName($row['name']);
+            $product->setPrice($row['price']);
+            $product->setType($row['type']);
+            
+            $products[] = $product;
         }
 
         $res->json(
@@ -77,32 +73,27 @@ class ProductList {
         $deleted = [];
 
         foreach ($products as $p) {
+            $product = null;
+
             switch ($p['type']) {
                 case 'DVD':
-                    $dvd = new DVD($p['sku']);
+                    $product = new DVD($p['sku']);
                     
-                    if ($dvd->delete($db)) {
-                        $deleted[] = $dvd->getSku();
-                    }
-
                     break;
                 case 'Furniture':
-                    $furn = new Furniture($p['sku']);
-                    
-                    if ($furn->delete($db)) {
-                        $deleted[] = $furn->getSku();
-                    }
+                    $product = new Furniture($p['sku']);
 
                     break;
                 case 'Book':
-                    $book = new Book($p['sku']);
-
-                    if ($book->delete($db)) {
-                        $deleted[] = $book->getSku();
-                    }
+                    $product = new Book($p['sku']);
 
                     break;
             }
+
+            if ($product->delete($db)) {
+                $deleted[] = $product->getSku();
+            }
+
         }
 
         $res->json($deleted);
