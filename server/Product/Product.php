@@ -125,7 +125,7 @@ abstract class Product {
             ->condition('sku', '=', '"' . $this->sku . '"')
             ->execute();
 
-        if ($query->first()) return true;
+        if ($query->all()) return true;
 
         return false;
     }

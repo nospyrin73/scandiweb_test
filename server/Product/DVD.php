@@ -24,11 +24,7 @@ class DVD extends Product {
     }
 
     public function insert(Database $db): int {
-        // todo check if sku exists
-        
         parent::insert($db);
-
-        echo 'called dvd';
 
         $query = (new Query($db, $db->tables['DVD']))
             ->insert([
