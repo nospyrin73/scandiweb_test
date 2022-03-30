@@ -32,6 +32,7 @@ class Response {
     }
     
     public function json(string|array|object $data): void {
+        header('Content-Type: application/json');
         echo json_encode($data);
 
         $this->end();
