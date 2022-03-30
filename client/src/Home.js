@@ -6,11 +6,23 @@ import ProductList from './components/ProductList';
 import Footer from './components/Footer';
 
 async function fetchProducts() {
-    let result = await fetch('/products');
+    let response = await fetch('/products');
 
-    let json = await result.json();
+    if (!response.ok) {
+        console.error(await response.text());
+        
+        return [];
+    }
 
-    return json;
+    let isJson = response.headers.get('content-type')?.includes('application/json');
+
+    if (isJson) {
+        return await response.json();
+    } else {
+        console.error(await response.text())
+
+        return [];
+    }
 }
 
 function Home() {

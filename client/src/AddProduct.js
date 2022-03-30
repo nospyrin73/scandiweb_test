@@ -67,6 +67,16 @@ function AddProduct() {
         fetch('/products', {
             method: 'POST',
             body: formData
+        }).then(response => {
+            if (response.ok) {
+                // redirect
+            } else {
+                console.log(response);
+                setAlert({
+                    className: 'danger',
+                    message: `Error: ${response.statusText}`
+                });
+            }
         });
     }
 

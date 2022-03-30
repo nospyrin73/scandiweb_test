@@ -67,7 +67,7 @@ class Router {
 
         // path found but method mismatched
         if ($path_found) {
-            $res->status(403, 'Forbidden Method');
+            $res->status(501, 'Forbidden Method');
         }
     }
 }
