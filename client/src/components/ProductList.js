@@ -51,7 +51,7 @@ function Product({ sku, name, price, type, special, shouldDelete }) {
             
             <div>{sku}</div>
             <div><strong>{name}</strong></div>
-            <div>{price}$</div>
+            <div>{price} $</div>
             <div>{specialText}</div>
         </div>
     );

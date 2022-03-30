@@ -78,7 +78,7 @@ function Home() {
         <main className="main">
             <Header label="Product List">
                 <Link to="/add-product" className="button primary">Add</Link>
-                <button className="button danger" onClick={massDelete}>Mass Delete</button>
+                <button id="delete-product-btn" className="button danger" onClick={massDelete}>Mass Delete</button>
             </Header>
 
             <article className="content">
