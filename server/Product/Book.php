@@ -23,8 +23,17 @@ class Book extends Product {
         $this->weight = $weight;
     }
 
-    public function insert() {
+    public function insert(Database $db): int {
+        parent::insert($db);
         
+        $query = (new Query($db, $db->tables['Book']))
+            ->insert([
+                'sku' => '"' . $this->sku . '"',
+                'weight' => $this->weight
+            ])
+            ->execute();
+
+        return $query->getResult()->rowCount();
     }
 
     public function delete(Database $db): int {

@@ -43,8 +43,19 @@ class Furniture extends Product {
         $this->length = $length;
     }
 
-    public function insert() {
+    public function insert(Database $db): int {
+        parent::insert($db);
+        
+        $query = (new Query($db, $db->tables['Furniture']))
+            ->insert([
+                'sku' => '"' . $this->sku . '"',
+                'height' => $this->height,
+                'width' => $this->width,
+                'length' => $this->length
+            ])
+            ->execute();
 
+        return $query->getResult()->rowCount();
     }
 
     public function delete(Database $db): int {

@@ -23,7 +23,22 @@ class DVD extends Product {
         $this->size = $size;
     }
 
-    public function insert() {}
+    public function insert(Database $db): int {
+        // todo check if sku exists
+        
+        parent::insert($db);
+
+        echo 'called dvd';
+
+        $query = (new Query($db, $db->tables['DVD']))
+            ->insert([
+                'sku' => '"' . $this->sku . '"',
+                'size' => (float) $this->size
+            ])
+            ->execute();
+
+        return $query->getResult()->rowCount();
+    }
 
     public function delete(Database $db): int {
         $q1 = (new Query($db, $db->tables['DVD']))

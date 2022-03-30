@@ -4,7 +4,8 @@ declare(strict_types = 1);
 
 namespace App\Product;
 
-use App\Database\Database;
+use App\Utils\{Request, Response};
+use App\Database\{Database, Query};
 
 abstract class Product {
     protected string $name;
@@ -46,11 +47,22 @@ abstract class Product {
         return $this->type;
     }
 
-    abstract public function insert();
+    public function insert(Database $db): int {
+        $query = (new Query($db, $db->tables['Product']))
+            ->insert([
+                'sku' => '"' . $this->sku . '"',
+                'name' => '"' . $this->name . '"',
+                'price' => $this->price,
+                'type' => '"' . $this->type . '"',
+            ])
+            ->execute();
+
+        return $query->getResult()->rowCount();
+    }
 
     abstract public function delete(Database $db): int;
 
-    public static function create($req, $res, $db): void {
+    public static function create(Request $req, Response $res, Database $db): void {
         $product = null;
 
         $payload = $req->getPayload();
@@ -78,15 +90,44 @@ abstract class Product {
                 $product->setWeight((float) $payload['weight']);
                 
                 break;
+            default:
+                // send error type mismatch
         }
 
         $product->setName($payload['name']);
         $product->setPrice((float) $payload['price']);
         $product->setType($payload['type']);
 
+        
+        if ($product->exists($db)) {
+            $res->status(409, 'Duplicate Entry')->end();
+
+            return;
+        }
+        
         // insert into db
 
-        $product->insert();   
+        $inserted = $product->insert($db);
+
+        if ($inserted) {
+            $res->status(201, 'Created')->end();
+
+            return;
+        }
+
+        $res->status(500, 'Failed');
+    }
+
+    public function exists(Database $db): bool {
+        $query = (new Query($db, $db->tables['Product']))
+            ->select(['*'])
+            ->where()
+            ->condition('sku', '=', '"' . $this->sku . '"')
+            ->execute();
+
+        if ($query->first()) return true;
+
+        return false;
     }
 
     public function toMap(): array {
