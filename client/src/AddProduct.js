@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Header from './components/Header';
 import ProductForm from './components/ProductForm';
@@ -19,6 +19,8 @@ function AddProduct() {
     const [values, setValues] = useState(defaultValues);
     const [type, setType] = useState('default');
     const [alert, setAlert] = useState(null);
+
+    const navigate = useNavigate();
 
     function handleChange(event) {
         const { name, value } = event.target;
@@ -69,7 +71,7 @@ function AddProduct() {
             body: formData
         }).then(response => {
             if (response.ok) {
-                // redirect
+                navigate('/');
             } else {
                 console.log(response);
                 setAlert({
