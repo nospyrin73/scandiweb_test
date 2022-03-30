@@ -6,8 +6,12 @@ namespace App\Utils;
 
 class Response {
     public function type(string $path): self {
-        if (file_exists($path))
-            header("Content-Type: {mime_content_type($path)}");
+        if (file_exists($path)) {
+            $detector = new \League\MimeTypeDetection\FinfoMimeTypeDetector();
+            $mimeType = $detector->detectMimeType($path, 'string contents');
+            
+            header("Content-Type: ${mimeType}");
+        }
 
         return $this;
     }
