@@ -35,6 +35,8 @@ class Router {
             'CONTENT_TYPE' => $contentType
         ] = $_SERVER;
 
+        $contentType = $contentType ?? 'text/plain';
+
         $req = (new Request($requestUri, $httpMethod, $contentType))
             ->populateUrlSegments()
             ->populatePayload();
