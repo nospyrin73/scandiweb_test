@@ -28,6 +28,7 @@ async function fetchProducts() {
 function Home() {
     const [products, setProducts] = useState([]);
     const [toBeDeleted, setToBeDeleted] = useState([]);
+    const [refs, setRefs] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -35,7 +36,7 @@ function Home() {
         })();
     }, []);
 
-    function setShouldDelete(sku, setIsChecked) {
+    function setShouldDelete(sku, setIsChecked, checkbox) {
         let i = toBeDeleted.indexOf(sku);
 
         if (i === -1) {
@@ -43,18 +44,20 @@ function Home() {
             setToBeDeleted(toBeDeleted);
             
             setIsChecked(true);
+            checkbox.checked = true;
         } else {
             toBeDeleted.splice(i, 1);
             setToBeDeleted(toBeDeleted);
 
             setIsChecked(false);
+            checkbox.checked = false;
         }
     }
 
     async function massDelete() {
         const filtered = products.filter(product => {
             // if it shouldn't be deleted, add to new products array 'filtered'
-            return toBeDeleted.includes(product.sku);
+            return toBeDeleted.includes(product.sku) || refs[product.sku].current.checked;
         });
 
         const result = await fetch('/products', {
@@ -74,15 +77,21 @@ function Home() {
         setProducts(updatedProducts);
     }
 
+    function addRef(sku, ref) {
+        refs[sku] = ref;
+
+        setRefs(refs);
+    }
+
     return (
         <main className="main">
             <Header label="Product List">
-                <Link to="/add-product" className="button primary">Add</Link>
-                <button id="delete-product-btn" className="button danger" onClick={massDelete}>Mass Delete</button>
+                <Link to="/add-product" className="button primary">ADD</Link>
+                <button id="delete-product-btn" className="button danger" onClick={massDelete}>MASS DELETE</button>
             </Header>
 
             <article className="content">
-                <ProductList products={products} setShouldDelete={setShouldDelete}/>
+                <ProductList products={products} setShouldDelete={setShouldDelete} addRef={addRef}/>
             </article>
 
             <Footer />

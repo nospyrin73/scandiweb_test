@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 
 import './ProductList.scss'
@@ -16,6 +16,7 @@ function ProductList({ products, ...props }) {
                         type={type}
                         special={special}
                         shouldDelete={props.setShouldDelete}
+                        addRef={props.addRef}
                     />
                 );
             })}
@@ -23,8 +24,9 @@ function ProductList({ products, ...props }) {
     );
 }
 
-function Product({ sku, name, price, type, special, shouldDelete }) {
+function Product({ sku, name, price, type, special, shouldDelete, addRef }) {
     const [isChecked, setIsChecked] = useState(false);
+    const checkbox = useRef(null);
 
     let specialText;
 
@@ -41,11 +43,21 @@ function Product({ sku, name, price, type, special, shouldDelete }) {
         default:
     }
 
+    useEffect(() => {
+        addRef(sku, checkbox);
+    }, [sku, addRef]);
+
     return (
         <div className={classNames('product-card', 'shadow', {'marked': isChecked})} 
-        onClick={event => shouldDelete(sku, setIsChecked)}>
+        onClick={event => shouldDelete(sku, setIsChecked, checkbox.current)}>
             <label className="checkbox-label">
-                <input type="checkbox" name="" className="delete-checkbox" checked={isChecked} onChange={event => shouldDelete(sku, setIsChecked)}/>
+                <input 
+                    type="checkbox"
+                    name="checkbox" 
+                    className="delete-checkbox"
+                    defaultChecked={isChecked}
+                    onChange={event => {console.log('on change...');}}
+                    ref={checkbox}/>
                 <span></span>
             </label>
             
