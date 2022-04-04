@@ -63,36 +63,16 @@ abstract class Product {
     abstract public function delete(Database $db): int;
 
     public static function create(Request $req, Response $res, Database $db): void {
-        $product = null;
-
         $payload = $req->getPayload();
 
+        [
+            'sku' => $sku,
+            'type' => $type
+        ] = $payload;
+
+        $product = new $type($sku, ...$payload);
+        
         // initialize object
-
-        switch ($payload['type']) {
-            case 'DVD':
-                $product = new DVD($payload['sku']);
-
-                $product->setSize((float) $payload['size']);
-                
-                break;
-            case 'Furniture':
-                $product = new Furniture($payload['sku']);
-
-                $product->setHeight((float) $payload['height']);
-                $product->setWidth((float) $payload['width']);
-                $product->setLength((float) $payload['length']);
-                
-                break;
-            case 'Book':
-                $product = new Book($payload['sku']);
-
-                $product->setWeight((float) $payload['weight']);
-                
-                break;
-            default:
-                // send error type mismatch
-        }
 
         $product->setName($payload['name']);
         $product->setPrice((float) $payload['price']);

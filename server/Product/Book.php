@@ -11,8 +11,10 @@ class Book extends Product {
 
     public function __construct(
         string $sku,
+        array ...$params
     ) {
         parent::__construct($sku);
+        $this->weight = (float) $params['weight'];
     }
 
     public function getWeight(): float {

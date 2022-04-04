@@ -15,8 +15,13 @@ class Furniture extends Product {
 
     public function __construct(
         string $sku,
+        array ...$params
+
     ) {
         parent::__construct($sku);
+        $this->height = (float) $params['height'];
+        $this->width = (float) $params['width'];
+        $this->length = (float) $params['length'];
     }
 
     public function getHeight(): float {

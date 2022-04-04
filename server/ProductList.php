@@ -27,34 +27,16 @@ class ProductList {
         $products = [];
 
         foreach ($result as $row) {
-            $product = null;
+            [
+                'sku' => $sku,
+                'type' => $type
+            ] = $row;
 
-            switch ($row['type']) {
-                case 'DVD':
-                    $product = new DVD($row['sku']);
-
-                    $product->setSize($row['size']);
-
-                    break;
-                case 'Furniture':
-                    $product = new Furniture($row['sku']);
-
-                    $product->setHeight($row['height']);
-                    $product->setWidth($row['width']);
-                    $product->setLength($row['length']);
-                    
-                    break;
-                case 'Book':
-                    $product = new Book($row['sku']);
-
-                    $product->setWeight($row['weight']);
-
-                    break;
-            }
+            $product = new $type($sku, ...$row);
 
             $product->setName($row['name']);
             $product->setPrice($row['price']);
-            $product->setType($row['type']);
+            $product->setType($type);
             
             $products[] = $product;
         }
@@ -73,22 +55,7 @@ class ProductList {
         $deleted = [];
 
         foreach ($products as $p) {
-            $product = null;
-
-            switch ($p['type']) {
-                case 'DVD':
-                    $product = new DVD($p['sku']);
-                    
-                    break;
-                case 'Furniture':
-                    $product = new Furniture($p['sku']);
-
-                    break;
-                case 'Book':
-                    $product = new Book($p['sku']);
-
-                    break;
-            }
+            $product = new $p['type']($p['sku']);
 
             if ($product->delete($db)) {
                 $deleted[] = $product->getSku();

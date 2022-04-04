@@ -10,9 +10,11 @@ class DVD extends Product {
     private float $size;
 
     public function __construct(
-        string $sku
+        string $sku,
+        array ...$params
     ) {
         parent::__construct($sku);
+        $this->size = (float) $params['size'];
     }
 
     public function getSize(): float {
